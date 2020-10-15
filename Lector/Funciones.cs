@@ -367,13 +367,15 @@ namespace Lector
                                         {
                                             // TXT o CRUCIGRAMA
                                             nombreEjercicio = "p" + idhoja + "_" + ejercicio + numEjercicio;
-                                            html += @"<input type=""text"" id =""" + nombreEjercicio + @""" class=""respuesta"" placeholder =""" + placeholder + @"""";
+                                            string clase = "respuesta";
                                             if (ejercicio.Equals("crucigrama"))
                                             {
                                                 html += @" maxlength=""1""";
                                                 wid = "10px"; hei = "10px";
+                                                clase += " " + ejercicio + " valn";
                                             }
                                             else wid = "27%"; hei = "8px";
+                                            html += @"<input type=""text"" id =""" + nombreEjercicio + @""" class=""" + clase + @""" placeholder =""" + placeholder + @"""";
                                             html += ">";
 
                                         }
