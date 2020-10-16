@@ -443,8 +443,7 @@ namespace Lector
                                             // SOPA DE LETRAS
                                             nombreEjercicio = "p" + idhoja + "_" + ejercicio;
                                             puzzle = "puzzle" + "_" + idhoja;
-                                            html += @"<div id=""" + puzzle + @"""> <div id =""" + nombreEjercicio + @""" class=""" + puzzle + @"""></div></div>";                                           
-
+                                            html += @"<div id=""" + puzzle + @"""> <div id =""" + nombreEjercicio + @""" class=""" + puzzle + @"""></div></div>";
                                         }
                                         else if (ejercicio.Equals("foto"))
                                         {
@@ -453,7 +452,7 @@ namespace Lector
                                             var foto = "imagen_" + idhoja;
                                             var idFoto = "p" + idhoja + "_img" + numEjercicio;
                                             html += @"<div id="""+nombreEjercicio+ @""" class=""imagen"" onclick=""Click(this.id)""></div> " + "\n\r\t\t"+@" <input style=""display:none;"" type=""file"" id="""+ idFoto+@""" accept=""image/*"" onchange=""mostrar(this.id)""/>  ";
-
+                                            wid = "40px"; hei = "70px";
                                         }
                                         else if (System.Text.RegularExpressions.Regex.IsMatch(ejercicio, "multiple"))
                                         {
