@@ -589,10 +589,6 @@ namespace Lector
                     escri2.WriteLine("}");
                     escri2.WriteLine(" ");
 
-                    escri2.WriteLine("." + puzzle + " .complete" + " {");
-                    escri2.WriteLine("}");
-                    escri2.WriteLine(" ");
-
                     escri2.Close();
                 }
                 else
