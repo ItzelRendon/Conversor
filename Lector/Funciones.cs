@@ -373,13 +373,13 @@ namespace Lector
                                             nombreEjercicio = "p" + idhoja + "_" + ejercicio + numEjercicio;
                                             string clase = "respuesta";
                                             if (ejercicio.Equals("crucigrama"))
-                                            {
-                                                html += @" maxlength=""1""";
+                                            {                                                
                                                 wid = "10px"; hei = "10px";
                                                 clase += " " + ejercicio + " valn";
                                             }
-                                            else wid = "27%"; hei = "8px";
+                                            else wid = "70px"; hei = "8px";
                                             html += @"<input type=""text"" id =""" + nombreEjercicio + @""" class=""" + clase + @""" placeholder =""" + placeholder + @"""";
+                                            if (ejercicio.Equals("crucigrama")) html += @" maxlength=""1""";
                                             html += ">";
 
                                         }
@@ -388,7 +388,7 @@ namespace Lector
                                             // TXTAREA
                                             nombreEjercicio = "p" + idhoja + "_txtarea" + numEjercicio;
                                             html += @"<textarea id =""" + nombreEjercicio + @""" class=""respuesta"" placeholder =""" + placeholder + @"""></textarea>";
-                                            wid = "27%"; hei = "8px";
+                                            wid = "70px"; hei = "8px";
                                         }
                                         else if (ejercicio.Equals("canvas"))
                                         {
@@ -428,7 +428,7 @@ namespace Lector
                                             }
                                             html += "\n\r\t\t" + @"</div>";
                                         }
-                                        else if (ejercicio.Equals("encerrar") || ejercicio.Equals("subrayar"))
+                                        else if (System.Text.RegularExpressions.Regex.IsMatch(ejercicio, "encerrar") || ejercicio.Equals("subrayar"))
                                         {
                                             // ENCERRAR o SUBRAYAR
                                             nombreEjercicio = "p" + idhoja + "_" + ejercicio + "_" + numEjercicio;
