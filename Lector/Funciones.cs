@@ -574,20 +574,20 @@ namespace Lector
                     escri2.WriteLine("}");
                     escri2.WriteLine(" ");
 
-                    escri2.WriteLine("." + puzzle + " .selected" + " {");
+                    escri2.WriteLine("." + puzzle + " .selected" + "," + " ." + puzzle + " .found" + "," + " ." + puzzle + " .solved" + " {");
                     escri2.WriteLine("  height: 17px;");
                     escri2.WriteLine("}");
                     escri2.WriteLine(" ");
 
-                    escri2.WriteLine("." + puzzle + " .found" + " {");
-                    escri2.WriteLine("  height: 17px;");
-                    escri2.WriteLine("}");
-                    escri2.WriteLine(" ");
+                    //escri2.WriteLine("." + puzzle + " .found" + " {");
+                    //escri2.WriteLine("  height: 17px;");
+                    //escri2.WriteLine("}");
+                    //escri2.WriteLine(" ");
 
-                    escri2.WriteLine("." + puzzle + " .solved" + " {");
-                    escri2.WriteLine("  height: 17px;");
-                    escri2.WriteLine("}");
-                    escri2.WriteLine(" ");
+                    //escri2.WriteLine("." + puzzle + " .solved" + " {");
+                    //escri2.WriteLine("  height: 17px;");
+                    //escri2.WriteLine("}");
+                    //escri2.WriteLine(" ");
 
                     escri2.Close();
                 }
