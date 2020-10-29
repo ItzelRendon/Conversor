@@ -455,7 +455,7 @@ namespace Lector
                                             nombreEjercicio = "p" + idhoja + "_" + "img" + numEjercicio + "_div";
                                             var foto = "imagen_" + idhoja;
                                             var idFoto = "p" + idhoja + "_img" + numEjercicio;
-                                            html += @"<div id=""" + nombreEjercicio + @""" class=""imagen"" onclick=""Click(this.id)""> " + "\n\r\t\t" + @"  <i style=""position:absolute;left:113px;top:106px;color:black;"" class=""fas fa-plus""></i>" + "\n\r\t\t" + "</div>" + "\n\r\t\t" + @" <input style=""display:none;"" type=""file"" id=""" + idFoto + @""" accept=""image/*"" onchange=""mostrar(this.id)""/>  ";
+                                            html += @"<div id=""" + nombreEjercicio + @""" class=""imagen"" onclick=""Click(this.id)""> " + "\n\r\t\t" + @"  <i style=""color:black;"" class=""fas fa-plus""></i>" + "\n\r\t\t" + "</div>" + "\n\r\t\t" + @" <input style=""display:none;"" type=""file"" id=""" + idFoto + @""" accept=""image/*"" onchange=""mostrar(this.id)""/>  ";
                                             wid = "40px"; hei = "70px";
                                         }
                                         else if (System.Text.RegularExpressions.Regex.IsMatch(ejercicio, "multiple"))
