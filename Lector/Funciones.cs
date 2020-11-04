@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Lector
@@ -27,7 +27,9 @@ namespace Lector
                path = @"C:\Libros\",
                pathFinal = "",
                rutaEjercicios,
-               puzzle;        
+               puzzle,
+               classBtn,
+               classIco;
 
         Boolean re = false;       
         StreamWriter escri;                               
@@ -353,141 +355,166 @@ namespace Lector
                             for (int x = 0; x < ejer.Length; x++)
                             {
                                 // Identificar número y tipo de ejercicio
-                                Match match = Regex.Match(ejer[x], @"[a-z]");
+                                Match match = Regex.Match(ejer[x], @"[a-z]");                                
                                 // Validar si esta correcta la nomenclatura
                                 if (match.Success)
                                 {
-                                    // Cantidad
-                                    int cantidad = Convert.ToInt32(ejer[x].Substring(0, match.Index));
-                                    // Ejercicio
-                                    string ejercicio = ejer[x].Substring(match.Index, ejer[x].Length - match.Index);
-                                    // Recorrer la cantidad
-                                    for (int m = 1; m <= cantidad; m++)
+                                    try
                                     {
-                                        // Comparar ejercicio
-                                        string nombreEjercicio = "";
-                                        html += "\n\r\t\t";
-                                        if (ejercicio.Equals("txt") || ejercicio.Equals("crucigrama"))
+                                        // Cantidad
+                                        //Console.WriteLine(line3);
+                                        int cantidad = Convert.ToInt32(ejer[x].Substring(0, match.Index));
+                                        // Ejercicio
+                                        string ejercicio = ejer[x].Substring(match.Index, ejer[x].Length - match.Index);
+                                        // Recorrer la cantidad
+                                        for (int m = 1; m <= cantidad; m++)
                                         {
-                                            // TXT o CRUCIGRAMA
-                                            nombreEjercicio = "p" + idhoja + "_" + ejercicio + numEjercicio;
-                                            string clase = "respuesta";
-                                            if (ejercicio.Equals("crucigrama"))
-                                            {                                                
+                                            // Comparar ejercicio
+                                            string nombreEjercicio = "";
+                                            html += "\n\r\t\t";
+                                            if (ejercicio.Equals("txt") || ejercicio.Equals("crucigrama"))
+                                            {
+                                                // TXT o CRUCIGRAMA
+                                                nombreEjercicio = "p" + idhoja + "_" + ejercicio + numEjercicio;
+                                                string clase = "respuesta";
+                                                if (ejercicio.Equals("crucigrama"))
+                                                {
+                                                    wid = "10px"; hei = "10px";
+                                                    clase += " " + ejercicio + " valn";
+                                                }
+                                                else wid = "70px"; hei = "8px";
+                                                html += @"<input type=""text"" id =""" + nombreEjercicio + @""" class=""" + clase + @""" placeholder =""" + placeholder + @"""";
+                                                if (ejercicio.Equals("crucigrama")) html += @" maxlength=""1""";
+                                                html += ">";
+
+                                            }
+                                            else if (ejercicio.Equals("txtarea"))
+                                            {
+                                                // TXTAREA
+                                                nombreEjercicio = "p" + idhoja + "_txtarea" + numEjercicio;
+                                                html += @"<textarea id =""" + nombreEjercicio + @""" class=""respuesta"" placeholder =""" + placeholder + @"""></textarea>";
+                                                wid = "70px"; hei = "8px";
+                                            }
+                                            else if (ejercicio.Equals("canvas"))
+                                            {
+                                                // CANVAS
+                                                nombreEjercicio = "canvas" + idhoja;
+                                                html += @"<canvas id =""" + nombreEjercicio + @""" class=""canvas"" width=""" + width + @""" height=""" + height + @"""></canvas>";
+                                            }
+                                            else if (System.Text.RegularExpressions.Regex.IsMatch(ejercicio, "relacionar"))
+                                            {
+                                                // RELACIONAR
+                                                string[] relacionar = ejercicio.Split("#");
+                                                nombreEjercicio = "p" + idhoja + "_relacionar" + numEjercicio;
+                                                string nombreEjercicioRel = "";
+                                                html += @"<div id=""" + nombreEjercicio + @""">";
+                                                int num = 0, leftR = 0, topR = 50;
+                                                for (int l = 1; l <= Convert.ToInt32(relacionar[1]); l++)
+                                                {
+                                                    string valor = "";
+                                                    if ((l % 2) == 0)
+                                                    {
+                                                        valor = "d";
+                                                        leftR = 185;
+                                                    }
+                                                    else
+                                                    {
+                                                        valor = "i";
+                                                        num++;
+                                                        topR += 50;
+                                                        leftR = 50;
+                                                    }
+                                                    nombreEjercicioRel = "p" + idhoja + "_rel_" + valor + "_" + num;
+                                                    html += "\n\r\t\t\t\t" + @"<div id =""" + nombreEjercicioRel + @""" class=""relacionar""></div>";
+                                                    if (exists_file != true)
+                                                    {
+                                                        guardarCSS(path, libro, nombreEjercicioRel, ejercicio, leftR, topR, "50px", "50px");
+                                                    }
+                                                }
+                                                html += "\n\r\t\t" + @"</div>";
+                                            }
+                                            else if (System.Text.RegularExpressions.Regex.IsMatch(ejercicio, "encerrar") || ejercicio.Equals("subrayar"))
+                                            {
+                                                // ENCERRAR o SUBRAYAR
+                                                nombreEjercicio = "p" + idhoja + "_" + ejercicio + "_" + numEjercicio;
+                                                html += @"<div id =""" + nombreEjercicio + @""" class=""" + ejercicio + @"""></div>";
                                                 wid = "10px"; hei = "10px";
-                                                clase += " " + ejercicio + " valn";
                                             }
-                                            else wid = "70px"; hei = "8px";
-                                            html += @"<input type=""text"" id =""" + nombreEjercicio + @""" class=""" + clase + @""" placeholder =""" + placeholder + @"""";
-                                            if (ejercicio.Equals("crucigrama")) html += @" maxlength=""1""";
-                                            html += ">";
-
-                                        }
-                                        else if (ejercicio.Equals("txtarea"))
-                                        {
-                                            // TXTAREA
-                                            nombreEjercicio = "p" + idhoja + "_txtarea" + numEjercicio;
-                                            html += @"<textarea id =""" + nombreEjercicio + @""" class=""respuesta"" placeholder =""" + placeholder + @"""></textarea>";
-                                            wid = "70px"; hei = "8px";
-                                        }
-                                        else if (ejercicio.Equals("canvas"))
-                                        {
-                                            // CANVAS
-                                            nombreEjercicio = "canvas" + idhoja;
-                                            html += @"<canvas id =""" + nombreEjercicio + @""" class=""canvas"" width=""" + width + @""" height=""" + height + @"""></canvas>";
-                                        }
-                                        else if (System.Text.RegularExpressions.Regex.IsMatch(ejercicio, "relacionar"))
-                                        {
-                                            // RELACIONAR
-                                            string[] relacionar = ejercicio.Split("#");
-                                            nombreEjercicio = "p" + idhoja + "_relacionar" + numEjercicio;
-                                            string nombreEjercicioRel = "";
-                                            html += @"<div id=""" + nombreEjercicio + @""">";
-                                            int num = 0, leftR = 0, topR = 50;
-                                            for (int l = 1; l <= Convert.ToInt32(relacionar[1]); l++)
+                                            else if (ejercicio.Equals("palomita") || ejercicio.Equals("tachita"))
                                             {
-                                                string valor = "";
-                                                if ((l % 2) == 0)
-                                                {
-                                                    valor = "d";
-                                                    leftR = 185;
-                                                }
-                                                else
-                                                {
-                                                    valor = "i";
-                                                    num++;
-                                                    topR += 50;
-                                                    leftR = 50;
-                                                }
-                                                nombreEjercicioRel = "p" + idhoja + "_rel_" + valor + "_" + num;
-                                                html += "\n\r\t\t\t\t" + @"<div id =""" + nombreEjercicioRel + @""" class=""relacionar""></div>";
-                                                if (exists_file != true)
-                                                {
-                                                    guardarCSS(path, libro, nombreEjercicioRel, leftR, topR, "50px", "50px");
-                                                }                                                    
+                                                // PALOMITA o TACHITA
+                                                nombreEjercicio = "p" + idhoja + "_" + ejercicio + "_" + numEjercicio;
+                                                html += @"<div id =""" + nombreEjercicio + @""" class=""" + ejercicio + @"""></div>";
+                                                wid = "10px"; hei = "10px";
                                             }
-                                            html += "\n\r\t\t" + @"</div>";
-                                        }
-                                        else if (System.Text.RegularExpressions.Regex.IsMatch(ejercicio, "encerrar") || ejercicio.Equals("subrayar"))
-                                        {
-                                            // ENCERRAR o SUBRAYAR
-                                            nombreEjercicio = "p" + idhoja + "_" + ejercicio + "_" + numEjercicio;
-                                            html += @"<div id =""" + nombreEjercicio + @""" class=""" + ejercicio + @"""></div>";
-                                            wid = "10px"; hei = "10px";
-                                        }
-                                        else if (ejercicio.Equals("palomita") || ejercicio.Equals("tachita"))
-                                        {
-                                            // PALOMITA o TACHITA
-                                            nombreEjercicio = "p" + idhoja + "_" + ejercicio + "_" + numEjercicio;
-                                            html += @"<div id =""" + nombreEjercicio + @""" class=""" + ejercicio + @"""></div>";
-                                            wid = "10px"; hei = "10px";
-                                        }
-                                        else if (ejercicio.Equals("sopa"))
-                                        {
-                                            // SOPA DE LETRAS
-                                            nombreEjercicio = "p" + idhoja + "_" + ejercicio;
-                                            puzzle = "puzzle" + "_" + idhoja;
-                                            html += @"<div id=""" + puzzle + @"""> <div id =""" + nombreEjercicio + @""" class=""" + puzzle + @"""></div></div>";
-                                        }
-                                        else if (ejercicio.Equals("foto"))
-                                        {
-                                            // FOTOGRAFÍA
-                                            nombreEjercicio = "p" + idhoja + "_" + "img" + numEjercicio + "_div";
-                                            var foto = "imagen_" + idhoja;
-                                            var idFoto = "p" + idhoja + "_img" + numEjercicio;
-                                            html += @"<div id=""" + nombreEjercicio + @""" class=""imagen"" onclick=""Click(this.id)""> " + "\n\r\t\t" + @"  <i style=""color:black;"" class=""fas fa-plus""></i>" + "\n\r\t\t" + "</div>" + "\n\r\t\t" + @" <input style=""display:none;"" type=""file"" id=""" + idFoto + @""" accept=""image/*"" onchange=""mostrar(this.id)""/>  ";
-                                            wid = "40px"; hei = "70px";
-                                        }
-                                        else if (System.Text.RegularExpressions.Regex.IsMatch(ejercicio, "multiple"))
-                                        {
-                                            // OPCIÓN MÚLTIPLE
-                                            string[] multiple = ejercicio.Split("#");
-                                            for (int i = 1; i <= Convert.ToInt32(multiple[1]); i++)
+                                            else if (ejercicio.Equals("sopa"))
                                             {
-                                                nombreEjercicio = "p" + idhoja + "_pregunta" + numEjercicio + "_opcion" + i;
-                                                string data = "p" + idhoja + "_pregunta" + numEjercicio;
-                                                html += @"<div id=""" + nombreEjercicio + @""" data=""" + data + @""" class=""" + multiple[0] + @"""></div>";
-                                                if (multiple[0].Equals("multipleS")) wid = "275px";
-                                                else wid = "20px";
-                                                hei = "20px";
-                                                if (exists_file != true) 
+                                                // SOPA DE LETRAS
+                                                nombreEjercicio = "p" + idhoja + "_" + ejercicio;
+                                                puzzle = "puzzle" + "_" + idhoja;
+                                                html += @"<div id=""" + puzzle + @"""> <div id =""" + nombreEjercicio + @""" class=""" + puzzle + @"""></div></div>";
+                                            }
+                                            else if (ejercicio.Equals("foto"))
+                                            {
+                                                // FOTOGRAFÍA
+                                                nombreEjercicio = "p" + idhoja + "_" + "img" + numEjercicio + "_div";
+                                                var foto = "imagen_" + idhoja;
+                                                var idFoto = "p" + idhoja + "_img" + numEjercicio;
+                                                html += @"<div id=""" + nombreEjercicio + @""" class=""imagen"" onclick=""Click(this.id)""> " + "\n\r\t\t" + @"  <i style=""color:black;"" class=""fas fa-plus""></i>" + "\n\r\t\t" + "</div>" + "\n\r\t\t" + @" <input style=""display:none;"" type=""file"" id=""" + idFoto + @""" accept=""image/*"" onchange=""mostrar(this.id)""/>  ";
+                                                wid = "40px"; hei = "70px";
+                                            }
+                                            else if (ejercicio.Equals("fotoC"))
+                                            {
+                                                // FOTOGRAFÍA CON CANVAS
+                                                nombreEjercicio = "p" + idhoja + "_" + "img" + numEjercicio + "_div";
+                                                var nombreFotoBoton = "p" + idhoja + "_" + "img" + numEjercicio + "_btn";
+                                                var foto = "imagen_" + idhoja;
+                                                var idFoto = "p" + idhoja + "_img" + numEjercicio;
+                                                classBtn = "btn_" + idhoja + "_" + numEjercicio;
+                                                classIco = "ico_" + idhoja + "_" + numEjercicio;
+                                                html += @"<div id=""" + nombreEjercicio + @""" class=""imagen""> " + "</div>" + "\n\r\t\t" + @"<button type=""button"" id=""" + nombreFotoBoton + @""" onclick=""Click(this.id)"" class=""" + classBtn + @"""> " + "\n\r\t\t" + @" <i class=""fas fa-plus " + classIco + @" "" style=""color:black""></i> " + "\n\r\t\t" + "</button>" + "\n\r\t\t" + @"<input style=""display:none;"" type=""file"" id=""" + idFoto + @""" accept=""image/*"" onchange=""mostrar(this.id)""/>  ";
+                                                wid = "40px"; hei = "70px";
+                                            }
+                                            else if (System.Text.RegularExpressions.Regex.IsMatch(ejercicio, "multiple"))
+                                            {
+                                                // OPCIÓN MÚLTIPLE
+                                                string[] multiple = ejercicio.Split("#");
+                                                for (int i = 1; i <= Convert.ToInt32(multiple[1]); i++)
                                                 {
-                                                    guardarCSS(path, libro, nombreEjercicio, left, top, wid, hei); 
+                                                    nombreEjercicio = "p" + idhoja + "_pregunta" + numEjercicio + "_opcion" + i;
+                                                    string data = "p" + idhoja + "_pregunta" + numEjercicio;
+                                                    html += @"<div id=""" + nombreEjercicio + @""" data=""" + data + @""" class=""" + multiple[0] + @"""></div>";
+                                                    if (multiple[0].Equals("multipleS")) wid = "275px";
+                                                    else wid = "20px";
+                                                    hei = "20px";
+                                                    if (exists_file != true)
+                                                    {
+                                                        guardarCSS(path, libro, nombreEjercicio, ejercicio, left, top, wid, hei);
+                                                    }
                                                 }
                                             }
-                                        }
 
-                                        // Crear estilo del ejercicio
-                                        if (!System.Text.RegularExpressions.Regex.IsMatch(ejercicio, "relacionar")
-                                            && !ejercicio.Equals("canvas")
-                                            && exists_file != true
-                                            && !System.Text.RegularExpressions.Regex.IsMatch(ejercicio, "multiple"))
-                                        {
-                                            guardarCSS(path, libro, nombreEjercicio, left, top, wid, hei);
-                                        }
+                                            // Crear estilo del ejercicio
+                                            if (!System.Text.RegularExpressions.Regex.IsMatch(ejercicio, "relacionar")
+                                                && !ejercicio.Equals("canvas")
+                                                && exists_file != true
+                                                && !System.Text.RegularExpressions.Regex.IsMatch(ejercicio, "multiple"))
+                                            {
+                                                guardarCSS(path, libro, nombreEjercicio, ejercicio, left, top, wid, hei);
+                                            }
 
-                                        numEjercicio++;
+                                            numEjercicio++;
+                                        }
                                     }
+                                    catch (Exception e)
+                                    {
+                                        Console.WriteLine("incorrectas: " + line3);
+                                        bandera_final = 0;
+                                    }                                    
+                                }else
+                                {
+                                    Console.WriteLine("incorrectas: " + line3);
+                                    bandera_final = 0;
                                 }
                             }
                             html += "\n\r" + "<!-- fin ejercicios -->" + "\n\r";
@@ -542,15 +569,14 @@ namespace Lector
             }
         }
 
-        public void guardarCSS(string path, DirectoryInfo libro, string nombreEjercicio, int left, int top, string width, string height)
+        public void guardarCSS(string path, DirectoryInfo libro, string nombreEjercicio, string ejercicio, int left, int top, string width, string height)
         {
             // Se agrega el ejercicio al CSS
             string estilo = path + libro.Name + @"\" + "assets" + @"\" + "css" + @"\" + "ejercicios.css";            
             if (nombreEjercicio.Length != 0)
             {
                 StreamWriter escri2 = File.AppendText(estilo);
-                string[] tipo = nombreEjercicio.Split("_");
-                if (tipo[1] == "sopa")
+                if (ejercicio == "sopa")
                 {
                     escri2.WriteLine("#" + puzzle + " {");
                     escri2.WriteLine("  position: absolute;");
@@ -579,17 +605,38 @@ namespace Lector
                     escri2.WriteLine("}");
                     escri2.WriteLine(" ");
 
-                    //escri2.WriteLine("." + puzzle + " .found" + " {");
-                    //escri2.WriteLine("  height: 17px;");
-                    //escri2.WriteLine("}");
-                    //escri2.WriteLine(" ");
+                    escri2.Close();
+                }
+                else if (ejercicio == "fotoC")
+                {
+                    escri2.WriteLine("#" + nombreEjercicio + " {");
+                    escri2.WriteLine("  left: " + left + "px;");
+                    escri2.WriteLine("  top: " + top + "px;");
+                    escri2.WriteLine("  height: " + height + ";");
+                    escri2.WriteLine("  width: " + width + ";");
+                    escri2.WriteLine("}");
+                    escri2.WriteLine(" ");
 
-                    //escri2.WriteLine("." + puzzle + " .solved" + " {");
-                    //escri2.WriteLine("  height: 17px;");
-                    //escri2.WriteLine("}");
-                    //escri2.WriteLine(" ");
+                    Console.WriteLine("ejer: " + ejercicio);
+                    escri2.WriteLine("." + classBtn + " {");
+                    escri2.WriteLine("  z-index: 100;");
+                    escri2.WriteLine("  top: 49px;");
+                    escri2.WriteLine("  position: relative;");
+                    escri2.WriteLine("  background: white;");
+                    escri2.WriteLine("  width: 55px;");
+                    escri2.WriteLine("  height: 19px;");
+                    escri2.WriteLine("  border: none;");
+                    escri2.WriteLine("  left: 164px;");
+                    escri2.WriteLine("}");
+                    escri2.WriteLine(" ");
+
+                    escri2.WriteLine("." + classIco + " {");
+                    escri2.WriteLine("  font-size: 10px;");
+                    escri2.WriteLine("}");
+                    escri2.WriteLine(" ");
 
                     escri2.Close();
+
                 }
                 else
                 {

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Lector
 {
@@ -100,7 +97,7 @@ namespace Lector
             //}
 
             if (objLibro.Bandera_final(1) >= 2) Console.WriteLine("Libro: " + libro + " finalizado con exito.");
-            else Console.WriteLine("No se completo libro: " + libro);
+            else Console.WriteLine("No se completo libro: " + libro + " si es la primera vez que se convierte, borrar el archivo ejercicio.css antes de volver a convertirlo");
             if (libro.Equals("")) Console.WriteLine("No se encontro ningun libro.");            
 
             System.Console.ReadLine();
