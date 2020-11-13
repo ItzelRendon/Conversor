@@ -472,7 +472,7 @@ namespace Lector
                                                 var idFoto = "p" + idhoja + "_img" + numEjercicio;
                                                 classBtn = "btn_" + idhoja + "_" + numEjercicio;
                                                 classIco = "ico_" + idhoja + "_" + numEjercicio;
-                                                html += @"<div id=""" + nombreEjercicio + @""" class=""imagen""> " + "</div>" + "\n\r\t\t" + @"<button type=""button"" id=""" + nombreFotoBoton + @""" onclick=""Click(this.id)"" class=""" + classBtn + @"""> " + "\n\r\t\t" + @" <i class=""fas fa-plus " + classIco + @" "" style=""color:black""></i> " + "\n\r\t\t" + "</button>" + "\n\r\t\t" + @"<input style=""display:none;"" type=""file"" id=""" + idFoto + @""" accept=""image/*"" onchange=""mostrar(this.id)""/>  ";
+                                                html += @"<div id=""" + nombreEjercicio + @""" class=""imagen""> " + "</div>" + "\n\r\t\t" + @"<button type=""button"" id=""" + nombreFotoBoton + @""" onclick=""Click(this.id)"" class=""" + classBtn + @" botonImagen""> " + "\n\r\t\t" + @" <i class=""fas fa-plus " + classIco + @" "" style=""color:black""></i> " + "\n\r\t\t" + "</button>" + "\n\r\t\t" + @"<input style=""display:none;"" type=""file"" id=""" + idFoto + @""" accept=""image/*"" onchange=""mostrar(this.id)""/>  ";
                                                 wid = "40px"; hei = "70px";
                                             }
                                             else if (System.Text.RegularExpressions.Regex.IsMatch(ejercicio, "multiple"))
@@ -617,21 +617,11 @@ namespace Lector
                     escri2.WriteLine("}");
                     escri2.WriteLine(" ");
 
-                    Console.WriteLine("ejer: " + ejercicio);
                     escri2.WriteLine("." + classBtn + " {");
-                    escri2.WriteLine("  z-index: 100;");
-                    escri2.WriteLine("  top: 49px;");
-                    escri2.WriteLine("  position: relative;");
-                    escri2.WriteLine("  background: white;");
-                    escri2.WriteLine("  width: 55px;");
-                    escri2.WriteLine("  height: 19px;");
-                    escri2.WriteLine("  border: none;");
                     escri2.WriteLine("  left: 164px;");
-                    escri2.WriteLine("}");
-                    escri2.WriteLine(" ");
-
-                    escri2.WriteLine("." + classIco + " {");
-                    escri2.WriteLine("  font-size: 10px;");
+                    escri2.WriteLine("  top: 49px;");
+                    escri2.WriteLine("  height: 19px;");
+                    escri2.WriteLine("  width: 55px;");
                     escri2.WriteLine("}");
                     escri2.WriteLine(" ");
 
