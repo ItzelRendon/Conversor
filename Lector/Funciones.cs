@@ -452,7 +452,7 @@ namespace Lector
                                                 // SOPA DE LETRAS
                                                 nombreEjercicio = "p" + idhoja + "_" + ejercicio;
                                                 puzzle = "puzzle" + "_" + idhoja;
-                                                html += @"<div id=""" + puzzle + @"""> <div id =""" + nombreEjercicio + @""" class=""" + puzzle + @"""></div></div>";
+                                                html += @"<div id=""" + nombreEjercicio + @""" class=""" + puzzle + @"""></div>";
                                             }
                                             else if (ejercicio.Equals("foto"))
                                             {
@@ -589,7 +589,6 @@ namespace Lector
                     escri2.WriteLine("." + puzzle + " div" + " {");
                     escri2.WriteLine("  width: 100%;");
                     escri2.WriteLine("  height: 16px;");
-                    escri2.WriteLine("  margin: 0 auto;");
                     escri2.WriteLine("}");
                     escri2.WriteLine(" ");
 
