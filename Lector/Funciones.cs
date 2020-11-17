@@ -28,6 +28,7 @@ namespace Lector
                pathFinal = "",
                rutaEjercicios,
                puzzle,
+               classDivPuzzle,
                classBtn,
                classIco;
 
@@ -452,7 +453,8 @@ namespace Lector
                                                 // SOPA DE LETRAS
                                                 nombreEjercicio = "p" + idhoja + "_" + ejercicio;
                                                 puzzle = "puzzle" + "_" + idhoja;
-                                                html += @"<div id=""" + nombreEjercicio + @""" class=""" + puzzle + @"""></div>";
+                                                classDivPuzzle = puzzle + "_div";
+                                                html += @"<div id=""" + nombreEjercicio + @""" class=""" + puzzle + @" " + classDivPuzzle + @"""></div>";
                                             }
                                             else if (ejercicio.Equals("foto"))
                                             {
@@ -578,7 +580,7 @@ namespace Lector
                 StreamWriter escri2 = File.AppendText(estilo);
                 if (ejercicio == "sopa")
                 {
-                    escri2.WriteLine("#" + puzzle + " {");
+                    escri2.WriteLine("." + classDivPuzzle + " {");
                     escri2.WriteLine("  position: absolute;");
                     escri2.WriteLine("  left: 61px;");
                     escri2.WriteLine("  top: 93px;");
@@ -593,9 +595,9 @@ namespace Lector
                     escri2.WriteLine(" ");
 
                     escri2.WriteLine("." + puzzle + " .puzzleSquare" + " {");
-                    escri2.WriteLine("  height: 3px;");
-                    escri2.WriteLine("  width: 16px;");
-                    escri2.WriteLine("  font-size: 8px;");
+                    escri2.WriteLine("  height: 16px;");
+                    escri2.WriteLine("  width: 12px;");
+                    escri2.WriteLine("  font-size: 6px;");
                     escri2.WriteLine("}");
                     escri2.WriteLine(" ");
 
