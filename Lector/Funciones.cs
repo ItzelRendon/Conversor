@@ -448,13 +448,25 @@ namespace Lector
                                                 html += @"<div id =""" + nombreEjercicio + @""" class=""" + ejercicio + @"""></div>";
                                                 wid = "10px"; hei = "10px";
                                             }
-                                            else if (ejercicio.Equals("sopa"))
+                                            else if (System.Text.RegularExpressions.Regex.IsMatch(ejercicio, "sopa"))
                                             {
                                                 // SOPA DE LETRAS
-                                                nombreEjercicio = "p" + idhoja + "_" + ejercicio;
+                                                nombreEjercicio = "p" + idhoja + "_sopa";
                                                 puzzle = "puzzle" + "_" + idhoja;
                                                 classDivPuzzle = puzzle + "_div";
                                                 html += @"<div id=""" + nombreEjercicio + @""" class=""" + puzzle + @" " + classDivPuzzle + @"""></div>";
+
+                                                string[] s = ejercicio.Split("#");
+                                                for (int l = 1; l <= Convert.ToInt32(s[1]); l++)
+                                                {
+                                                    string opcion = "p" + idhoja + "_sopa" + l;
+                                                    html += "\n\r\t\t";
+                                                    html += @"<p id=""" + opcion + @""" class=""word p_" + idhoja + @"""></p>";
+                                                    if (exists_file != true)
+                                                    {
+                                                        guardarCSS(path, libro, opcion, "sOpcion", 20, 10, "50px", "50px");
+                                                    }
+                                                }
                                             }
                                             else if (ejercicio.Equals("foto"))
                                             {
@@ -578,7 +590,7 @@ namespace Lector
             if (nombreEjercicio.Length != 0)
             {
                 StreamWriter escri2 = File.AppendText(estilo);
-                if (ejercicio == "sopa")
+                if (System.Text.RegularExpressions.Regex.IsMatch(ejercicio, "sopa"))
                 {
                     escri2.WriteLine("." + classDivPuzzle + " {");
                     escri2.WriteLine("  position: absolute;");
@@ -595,7 +607,7 @@ namespace Lector
                     escri2.WriteLine(" ");
 
                     escri2.WriteLine("." + puzzle + " .puzzleSquare" + " {");
-                    escri2.WriteLine("  height: 16px;");
+                    escri2.WriteLine("  height: 13px;");
                     escri2.WriteLine("  width: 12px;");
                     escri2.WriteLine("  font-size: 6px;");
                     escri2.WriteLine("}");
@@ -634,8 +646,11 @@ namespace Lector
                     escri2.WriteLine("#" + nombreEjercicio + " {");
                     escri2.WriteLine("  left: " + left + "px;");
                     escri2.WriteLine("  top: " + top + "px;");
-                    escri2.WriteLine("  height: " + height + ";");
-                    escri2.WriteLine("  width: " + width + ";");
+                    if(!ejercicio.Equals("sOpcion"))
+                    {
+                        escri2.WriteLine("  height: " + height + ";");
+                        escri2.WriteLine("  width: " + width + ";");
+                    }
                     escri2.WriteLine("}");
                     escri2.WriteLine(" ");
                     escri2.Close();
