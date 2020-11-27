@@ -454,17 +454,20 @@ namespace Lector
                                                 nombreEjercicio = "p" + idhoja + "_sopa";
                                                 puzzle = "puzzle" + "_" + idhoja;
                                                 classDivPuzzle = puzzle + "_div";
-                                                html += @"<div id=""" + nombreEjercicio + @""" class=""" + puzzle + @" " + classDivPuzzle + @"""></div>";
+                                                html += @"<div id=""" + nombreEjercicio + @""" class=""puzzle " + puzzle + @" " + classDivPuzzle + @"""></div>";
 
-                                                string[] s = ejercicio.Split("#");
-                                                for (int l = 1; l <= Convert.ToInt32(s[1]); l++)
+                                                if (System.Text.RegularExpressions.Regex.IsMatch(ejercicio, "sopa#"))
                                                 {
-                                                    string opcion = "p" + idhoja + "_sopa" + l;
-                                                    html += "\n\r\t\t";
-                                                    html += @"<p id=""" + opcion + @""" class=""word p_" + idhoja + @"""></p>";
-                                                    if (exists_file != true)
+                                                    string[] s = ejercicio.Split("#");
+                                                    for (int l = 1; l <= Convert.ToInt32(s[1]); l++)
                                                     {
-                                                        guardarCSS(path, libro, opcion, "sOpcion", 20, 10, "50px", "50px");
+                                                        string opcion = "p" + idhoja + "_sopa" + l;
+                                                        html += "\n\r\t\t";
+                                                        html += @"<p id=""" + opcion + @""" class=""word p_" + idhoja + @"""></p>";
+                                                        if (exists_file != true)
+                                                        {
+                                                            guardarCSS(path, libro, opcion, "sOpcion", 20, 10, "50px", "50px");
+                                                        }
                                                     }
                                                 }
                                             }
@@ -474,7 +477,7 @@ namespace Lector
                                                 nombreEjercicio = "p" + idhoja + "_" + "img" + numEjercicio + "_div";
                                                 var foto = "imagen_" + idhoja;
                                                 var idFoto = "p" + idhoja + "_img" + numEjercicio;
-                                                html += @"<div id=""" + nombreEjercicio + @""" class=""imagen"" onclick=""Click(this.id)""> " + "\n\r\t\t" + @"  <i style=""color:black;"" class=""fas fa-plus""></i>" + "\n\r\t\t" + "</div>" + "\n\r\t\t" + @" <input style=""display:none;"" type=""file"" id=""" + idFoto + @""" accept=""image/*"" onchange=""mostrar(this.id)""/>  ";
+                                                html += @"<div id=""" + nombreEjercicio + @""" class=""imagen"" onclick=""Click(this.id)""> " + "\n\r\t\t" + @"  <i class=""fas fa-plus""></i>" + "\n\r\t\t" + "</div>" + "\n\r\t\t" + @" <input style=""display:none;"" type=""file"" id=""" + idFoto + @""" accept=""image/*"" onchange=""mostrar(this.id)""/>  ";
                                                 wid = "40px"; hei = "70px";
                                             }
                                             else if (ejercicio.Equals("fotoC"))
@@ -486,7 +489,7 @@ namespace Lector
                                                 var idFoto = "p" + idhoja + "_img" + numEjercicio;
                                                 classBtn = "btn_" + idhoja + "_" + numEjercicio;
                                                 classIco = "ico_" + idhoja + "_" + numEjercicio;
-                                                html += @"<div id=""" + nombreEjercicio + @""" class=""imagen""> " + "</div>" + "\n\r\t\t" + @"<button type=""button"" id=""" + nombreFotoBoton + @""" onclick=""Click(this.id)"" class=""" + classBtn + @" botonImagen""> " + "\n\r\t\t" + @" <i class=""fas fa-plus " + classIco + @" "" style=""color:black""></i> " + "\n\r\t\t" + "</button>" + "\n\r\t\t" + @"<input style=""display:none;"" type=""file"" id=""" + idFoto + @""" accept=""image/*"" onchange=""mostrar(this.id)""/>  ";
+                                                html += @"<div id=""" + nombreEjercicio + @""" class=""imagen""> " + "</div>" + "\n\r\t\t" + @"<button type=""button"" id=""" + nombreFotoBoton + @""" onclick=""Click(this.id)"" class=""" + classBtn + @" botonImagen""> " + "\n\r\t\t" + @" <i class=""fas fa-plus " + classIco + @""" ></i> " + "\n\r\t\t" + "</button>" + "\n\r\t\t" + @"<input style=""display:none;"" type=""file"" id=""" + idFoto + @""" accept=""image/*"" onchange=""mostrar(this.id)""/>  ";
                                                 wid = "40px"; hei = "70px";
                                             }
                                             else if (System.Text.RegularExpressions.Regex.IsMatch(ejercicio, "multiple"))
@@ -596,7 +599,6 @@ namespace Lector
                     escri2.WriteLine("  position: absolute;");
                     escri2.WriteLine("  left: 61px;");
                     escri2.WriteLine("  top: 93px;");
-                    escri2.WriteLine("  background-color: white;");
                     escri2.WriteLine("}");
                     escri2.WriteLine(" ");
 
