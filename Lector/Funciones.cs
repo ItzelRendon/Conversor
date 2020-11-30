@@ -9,11 +9,11 @@ namespace Lector
 {
     class Funciones
     {
-
         int counter = 1,
             bandera = 0,        
             numPaginas = 0,
             inicio = 0,
+            final = 0,
             width = 0,
             height = 0;
 
@@ -224,7 +224,7 @@ namespace Lector
 
             System.IO.StreamReader file2 = new System.IO.StreamReader(rutaEjercicios, System.Text.Encoding.Default);
             String line2 = "";
-            int counter2 = 0, final = 0;
+            int counter2 = 0;
             string[] paginasInicio, paginasFinal;
 
             while (line2 != null)
@@ -574,12 +574,15 @@ namespace Lector
             {
                 String ruta = path + libro.Name + @"\" + fi.Name;
                 String readText = File.ReadAllText(ruta);
-                // Diferencia páginas
-                String encontrar = "var diferencia_pagina = 2";
-                readText = readText.Replace(encontrar, "var diferencia_pagina = " + inicio);
+                // Diferencia páginas inicio
+                String encontrar = "var diferencia_pagina_inicio = 2";
+                readText = readText.Replace(encontrar, "var diferencia_pagina_inicio = " + inicio);
+                // Diferencia páginas final
+                String encontrar2 = "var diferencia_pagina_final = 1";
+                readText = readText.Replace(encontrar2, "var diferencia_pagina_final = " + final);
                 // Tipo de libro
-                String encontrar2 = "let tipo_libro = '';";
-                readText = readText.Replace(encontrar2, "let tipo_libro = '" + tipo_libro + "';");
+                String encontrar3 = "let tipo_libro = '';";
+                readText = readText.Replace(encontrar3, "let tipo_libro = '" + tipo_libro + "';");
                 escri = File.CreateText(ruta);
                 escri.WriteLine(readText);
                 escri.Close();
