@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -30,6 +30,8 @@ namespace Lector
                puzzle,
                classDivPuzzle,
                classBtn,
+               idBoton,
+               idWords,
                classIco;
 
         Boolean re = false;       
@@ -408,7 +410,7 @@ namespace Lector
                                                 string[] relacionar = ejercicio.Split("#");
                                                 nombreEjercicio = "p" + idhoja + "_relacionar" + numEjercicio;
                                                 string nombreEjercicioRel = "";
-                                                html += @"<div id=""" + nombreEjercicio + @""">";
+                                                html += @"<div id=""" + nombreEjercicio + @""" name=""relacionar"">";
                                                 int num = 0, leftR = 0, topR = 50;
                                                 for (int l = 1; l <= Convert.ToInt32(relacionar[1]); l++)
                                                 {
@@ -454,22 +456,13 @@ namespace Lector
                                                 nombreEjercicio = "p" + idhoja + "_sopa";
                                                 puzzle = "puzzle" + "_" + idhoja;
                                                 classDivPuzzle = puzzle + "_div";
-                                                html += @"<div id=""" + nombreEjercicio + @""" class=""puzzle " + puzzle + @" " + classDivPuzzle + @"""></div>";
-
-                                                if (System.Text.RegularExpressions.Regex.IsMatch(ejercicio, "sopa#"))
-                                                {
-                                                    string[] s = ejercicio.Split("#");
-                                                    for (int l = 1; l <= Convert.ToInt32(s[1]); l++)
-                                                    {
-                                                        string opcion = "p" + idhoja + "_sopa" + l;
-                                                        html += "\n\r\t\t";
-                                                        html += @"<p id=""" + opcion + @""" class=""word p_" + idhoja + @"""></p>";
-                                                        if (exists_file != true)
-                                                        {
-                                                            guardarCSS(path, libro, opcion, "sOpcion", 20, 10, "50px", "50px");
-                                                        }
-                                                    }
-                                                }
+                                                idBoton = "p" + idhoja + "_boton";
+                                                idWords = "words_" + idhoja;
+                                                html += @"<div id="""+puzzle+@"""><div id="""+nombreEjercicio+@""" class="""+puzzle+@" " +classDivPuzzle+@"""></div></div>";
+                                                html += "\n\r\t\t";
+                                                html += @"<div id="""+ idBoton + @""" onclick=""showPuzzle()"">Jugar</div>";
+                                                html += "\n\r\t\t";
+                                                html += @"<div id=""" + idWords + @"""></div>";                                                
                                             }
                                             else if (ejercicio.Equals("foto"))
                                             {
@@ -597,29 +590,25 @@ namespace Lector
             {
                 StreamWriter escri2 = File.AppendText(estilo);
                 if (System.Text.RegularExpressions.Regex.IsMatch(ejercicio, "sopa"))
-                {
-                    escri2.WriteLine("." + classDivPuzzle + " {");
-                    escri2.WriteLine("  position: absolute;");
-                    escri2.WriteLine("  left: 61px;");
-                    escri2.WriteLine("  top: 93px;");
-                    escri2.WriteLine("}");
-                    escri2.WriteLine(" ");
-
-                    escri2.WriteLine("." + puzzle + " div" + " {");
-                    escri2.WriteLine("  width: 100%;");
-                    escri2.WriteLine("  height: 16px;");
-                    escri2.WriteLine("}");
-                    escri2.WriteLine(" ");
-
+                {                    
                     escri2.WriteLine("." + puzzle + " .puzzleSquare" + " {");
-                    escri2.WriteLine("  height: 13px;");
-                    escri2.WriteLine("  width: 12px;");
-                    escri2.WriteLine("  font-size: 6px;");
+                    escri2.WriteLine("  height: 16px;");
+                    escri2.WriteLine("  width: 21px;");
+                    escri2.WriteLine("  font-size: 12px;");
                     escri2.WriteLine("}");
                     escri2.WriteLine(" ");
 
                     escri2.WriteLine("." + puzzle + " .selected" + "," + " ." + puzzle + " .found" + "," + " ." + puzzle + " .solved" + " {");
-                    escri2.WriteLine("  height: 17px;");
+                    escri2.WriteLine("  height: 18px;");
+                    escri2.WriteLine("}");
+                    escri2.WriteLine(" ");
+
+                    escri2.WriteLine("#" + idBoton + " {");
+                    escri2.WriteLine("  position: absolute;");
+                    escri2.WriteLine("  left: 236px;");
+                    escri2.WriteLine("  top: 56px;");
+                    escri2.WriteLine("  font-size: 8px;");
+                    escri2.WriteLine("  cursor: pointer;");
                     escri2.WriteLine("}");
                     escri2.WriteLine(" ");
 
