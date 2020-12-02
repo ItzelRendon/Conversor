@@ -39,7 +39,7 @@ namespace Lector
 
         Archivos objArchivos = new Archivos();
 
-        public void agregarAssets(DirectoryInfo libro)
+        public void agregarAssets(DirectoryInfo libro, string bandera_tipoLibro)
         {
             string carpeta = EliminarAssets(@"C:\Libros\", libro);
             //Directory.CreateDirectory(carpeta);
@@ -80,7 +80,7 @@ namespace Lector
             }
 
             //Copiar el sopa de letras correspondiente
-            System.IO.File.Copy(System.IO.Path.Combine(@"C:\xampp\htdocs\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\Archivos\guias", libro.Name + "_SOPA" + ".js"),
+            System.IO.File.Copy(System.IO.Path.Combine(@"C:\xampp\htdocs\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\Archivos\" + bandera_tipoLibro, libro.Name + "_SOPA" + ".js"),
                                 System.IO.Path.Combine(path + libro.Name + @"\assets\modulos\", "sopas.js"), true);            
         }
         
@@ -220,9 +220,7 @@ namespace Lector
         public void obtenerListaEjercicios(DirectoryInfo libro, string bandera_tipoLibro)
         {
             // Obtener lista de ejercicios            
-            if (bandera_tipoLibro.Equals("guia")) rutaEjercicios = @"C:\xampp\htdocs\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\Archivos\guias\" + libro.Name + ".txt";
-            else if (bandera_tipoLibro.Equals("preescolar")) rutaEjercicios = @"C:\xampp\htdocs\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\Archivos\preescolar\preescolar.txt";
-            else rutaEjercicios = @"C:\xampp\htdocs\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\Archivos\primaria\" + libro.Name + ".txt";
+            rutaEjercicios = @"C:\xampp\htdocs\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\Archivos\" + bandera_tipoLibro + @"\" + libro.Name + ".txt";
 
             System.IO.StreamReader file2 = new System.IO.StreamReader(rutaEjercicios, System.Text.Encoding.Default);
             String line2 = "";
@@ -322,7 +320,7 @@ namespace Lector
 
                     if (!bandera_tipoLibro.Equals("guia"))
                     {
-                        namePage = "page" + libro;
+                        namePage = "page" + libro.Name;
                         ejemplo = fi.Name.Substring(namePage.Length);
                         id = ejemplo.Split(".");
                     }

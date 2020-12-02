@@ -7,9 +7,9 @@ namespace Lector
     {
         Funciones objFunciones = new Funciones();
 
-        public void agregarAssets(DirectoryInfo libro)
+        public void agregarAssets(DirectoryInfo libro, string bandera_tipoLibro)
         {
-            objFunciones.agregarAssets(libro);
+            objFunciones.agregarAssets(libro, bandera_tipoLibro);
         }
 
         public void agregarIndex(DirectoryInfo libro)

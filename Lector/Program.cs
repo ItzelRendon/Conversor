@@ -52,7 +52,7 @@ namespace Lector
                 //******************************************************************
 
                 //Agregar assets
-                objLibro.agregarAssets(book);                                                                                           
+                objLibro.agregarAssets(book, bandera_tipoLibro);                                                                                           
 
                 //Agregar el index
                 objLibro.agregarIndex(book);
