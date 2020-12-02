@@ -79,9 +79,12 @@ namespace Lector
                 }
             }
 
-            //Copiar el sopa de letras correspondiente
-            System.IO.File.Copy(System.IO.Path.Combine(@"C:\xampp\htdocs\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\Archivos\" + bandera_tipoLibro, libro.Name + "_SOPA" + ".js"),
-                                System.IO.Path.Combine(path + libro.Name + @"\assets\modulos\", "sopas.js"), true);            
+            //Copiar el sopa de letras correspondiente  
+            if (File.Exists(@"C:\xampp\htdocs\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\Archivos\" + bandera_tipoLibro + libro.Name + "_SOPA.js") != false)
+            {
+                System.IO.File.Copy(System.IO.Path.Combine(@"C:\xampp\htdocs\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\Archivos\" + bandera_tipoLibro, libro.Name + "_SOPA" + ".js"),
+                               System.IO.Path.Combine(path + libro.Name + @"\assets\modulos\", "sopas.js"), true);
+            }                       
         }
         
         public void agregarIndex(DirectoryInfo libro)
