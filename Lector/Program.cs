@@ -6,11 +6,12 @@ namespace Lector
     class Program
     {
         public static void Main(string[] args)
-        {                                                 
+        {
 
             String path = @"C:\Libros\",
                    libro = "",
-                   bandera_tipoLibro = "";
+                   bandera_tipoLibro = "",
+                   bandera_gradoLibro = "";
 
             Boolean exists_file = false;
 
@@ -49,19 +50,27 @@ namespace Lector
                 else if (System.Text.RegularExpressions.Regex.IsMatch(libro, "-S")) bandera_tipoLibro = "secundaria";
                 else if (System.Text.RegularExpressions.Regex.IsMatch(libro, "-B")) bandera_tipoLibro = "bachillerato";
 
+                // Obtener grado del libro
+                if (System.Text.RegularExpressions.Regex.IsMatch(libro, "1-")) bandera_gradoLibro = "primero";
+                else if (System.Text.RegularExpressions.Regex.IsMatch(libro, "2-")) bandera_gradoLibro = "segundo";
+                else if (System.Text.RegularExpressions.Regex.IsMatch(libro, "3-")) bandera_gradoLibro = "tercero";
+                else if (System.Text.RegularExpressions.Regex.IsMatch(libro, "4-")) bandera_gradoLibro = "cuarto";
+                else if (System.Text.RegularExpressions.Regex.IsMatch(libro, "5-")) bandera_gradoLibro = "quinto";
+                else if (System.Text.RegularExpressions.Regex.IsMatch(libro, "6-")) bandera_gradoLibro = "sexto";
+
                 //******************************************************************
 
                 //Agregar assets
-                objLibro.agregarAssets(book, bandera_tipoLibro);                                                                                           
+                objLibro.agregarAssets(book, bandera_tipoLibro, bandera_gradoLibro);                                                                                           
 
                 //Agregar el index
                 objLibro.agregarIndex(book);
 
                 //Obtener la lista de los ejercicios
-                objLibro.obtenerListaEjercicio(book, bandera_tipoLibro);
+                objLibro.obtenerListaEjercicio(book, bandera_tipoLibro, bandera_gradoLibro);
 
                 //Agregar los ejercicios
-                objLibro.agregarEjercicios(book, bandera_tipoLibro, exists_file);                
+                objLibro.agregarEjercicios(book, bandera_tipoLibro, bandera_gradoLibro, exists_file);                
 
                 //Agregar el numero de hojas que tiene el libro
                 objLibro.numeroDePaginas(book);

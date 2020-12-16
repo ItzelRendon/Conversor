@@ -39,7 +39,7 @@ namespace Lector
 
         Archivos objArchivos = new Archivos();
 
-        public void agregarAssets(DirectoryInfo libro, string bandera_tipoLibro)
+        public void agregarAssets(DirectoryInfo libro, string bandera_tipoLibro, string bandera_gradoLibro)
         {
             string carpeta = EliminarAssets(@"C:\Libros\", libro);
             //Directory.CreateDirectory(carpeta);
@@ -80,11 +80,11 @@ namespace Lector
             }
 
             //Copiar el sopa de letras correspondiente  
-            if (File.Exists(@"C:\xampp\htdocs\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\Archivos\" + bandera_tipoLibro + libro.Name + "_SOPA.js") != false)
+            if (File.Exists(@"C:\xampp\htdocs\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\Archivos\" + bandera_tipoLibro + @"\" + bandera_gradoLibro + @"\" + libro.Name + "_SOPA.js") != false)
             {
-                System.IO.File.Copy(System.IO.Path.Combine(@"C:\xampp\htdocs\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\Archivos\" + bandera_tipoLibro, libro.Name + "_SOPA" + ".js"),
+                System.IO.File.Copy(System.IO.Path.Combine(@"C:\xampp\htdocs\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\Archivos\" + bandera_tipoLibro + @"\" + bandera_gradoLibro, libro.Name + "_SOPA" + ".js"),
                                System.IO.Path.Combine(path + libro.Name + @"\assets\modulos\", "sopas.js"), true);
-            }                       
+            }
         }
         
         public void agregarIndex(DirectoryInfo libro)
@@ -220,10 +220,10 @@ namespace Lector
             }
         }
 
-        public void obtenerListaEjercicios(DirectoryInfo libro, string bandera_tipoLibro)
+        public void obtenerListaEjercicios(DirectoryInfo libro, string bandera_tipoLibro, string bandera_gradoLibro)
         {
             // Obtener lista de ejercicios            
-            rutaEjercicios = @"C:\xampp\htdocs\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\Archivos\" + bandera_tipoLibro + @"\" + libro.Name + ".txt";
+            rutaEjercicios = @"C:\xampp\htdocs\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\Archivos\" + bandera_tipoLibro + @"\" + bandera_gradoLibro + @"\" + libro.Name + ".txt";
 
             System.IO.StreamReader file2 = new System.IO.StreamReader(rutaEjercicios, System.Text.Encoding.Default);
             String line2 = "";
@@ -238,10 +238,12 @@ namespace Lector
                     paginasInicio = line2.Split(",");
                     paginasInicio = paginasInicio[0].Split(":");
                     inicio = Int32.Parse(paginasInicio[1]);
+                    Console.WriteLine("Diferencia inicio: " + inicio);
                     // Paginas final
                     paginasFinal = line2.Split(",");
                     paginasFinal = paginasFinal[1].Split(":");
                     final = Int32.Parse(paginasFinal[1]);
+                    Console.WriteLine("Diferencia final: " + final);
                 }
 
                 // Obtener el numero de hojas sin canvas en libros de PREESCOLAR
@@ -309,7 +311,7 @@ namespace Lector
             }
         }
 
-        public void agregarEjercicios(DirectoryInfo libro, string bandera_tipoLibro, Boolean exists_file)
+        public void agregarEjercicios(DirectoryInfo libro, string bandera_tipoLibro, string bandera_gradoLibro, Boolean exists_file)
         {
             // Agregar ejercicios por hoja en libros de PRIMARIA, SECUNDARIA y BACHILLERATO                
             if (!bandera_tipoLibro.Equals("preescolar"))
@@ -461,7 +463,7 @@ namespace Lector
                                                 idWords = "words_" + idhoja;
                                                 html += @"<div id="""+puzzle+@"""><div id="""+nombreEjercicio+@""" class="""+puzzle+@" " +classDivPuzzle+@"""></div></div>";
                                                 html += "\n\r\t\t";
-                                                html += @"<div id="""+ idBoton + @""" onclick=""showPuzzle()"">Jugar</div>";
+                                                html += @"<div id=""" + idBoton + @""" class=""boton-puzzle"" onclick=""showPuzzle()"">Jugar <div class=""fa fa-play icon-puzzle"" aria-hidden=""true""></div></div>";
                                                 html += "\n\r\t\t";
                                                 html += @"<div id=""" + idWords + @"""></div>";                                                
                                             }
@@ -592,24 +594,10 @@ namespace Lector
                 StreamWriter escri2 = File.AppendText(estilo);
                 if (System.Text.RegularExpressions.Regex.IsMatch(ejercicio, "sopa"))
                 {                    
-                    escri2.WriteLine("." + puzzle + " .puzzleSquare" + " {");
-                    escri2.WriteLine("  height: 16px;");
-                    escri2.WriteLine("  width: 21px;");
-                    escri2.WriteLine("  font-size: 12px;");
-                    escri2.WriteLine("}");
-                    escri2.WriteLine(" ");
-
-                    escri2.WriteLine("." + puzzle + " .selected" + "," + " ." + puzzle + " .found" + "," + " ." + puzzle + " .solved" + " {");
-                    escri2.WriteLine("  height: 18px;");
-                    escri2.WriteLine("}");
-                    escri2.WriteLine(" ");
-
                     escri2.WriteLine("#" + idBoton + " {");
-                    escri2.WriteLine("  position: absolute;");
                     escri2.WriteLine("  left: 236px;");
                     escri2.WriteLine("  top: 56px;");
-                    escri2.WriteLine("  font-size: 8px;");
-                    escri2.WriteLine("  cursor: pointer;");
+                    escri2.WriteLine("  font-size: 10px;");
                     escri2.WriteLine("}");
                     escri2.WriteLine(" ");
 

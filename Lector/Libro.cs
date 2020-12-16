@@ -7,9 +7,9 @@ namespace Lector
     {
         Funciones objFunciones = new Funciones();
 
-        public void agregarAssets(DirectoryInfo libro, string bandera_tipoLibro)
+        public void agregarAssets(DirectoryInfo libro, string bandera_tipoLibro, string bandera_gradoLibro)
         {
-            objFunciones.agregarAssets(libro, bandera_tipoLibro);
+            objFunciones.agregarAssets(libro, bandera_tipoLibro, bandera_gradoLibro);
         }
 
         public void agregarIndex(DirectoryInfo libro)
@@ -17,14 +17,14 @@ namespace Lector
             objFunciones.agregarIndex(libro);
         }
 
-        public void obtenerListaEjercicio(DirectoryInfo libro, string bandera_tipoLibro)
+        public void obtenerListaEjercicio(DirectoryInfo libro, string bandera_tipoLibro, string bandera_gradoLibro)
         {
-            objFunciones.obtenerListaEjercicios(libro, bandera_tipoLibro);
+            objFunciones.obtenerListaEjercicios(libro, bandera_tipoLibro, bandera_gradoLibro);
         }
 
-        public void agregarEjercicios(DirectoryInfo libro, string bandera_tipoLibro, Boolean exists_file)
+        public void agregarEjercicios(DirectoryInfo libro, string bandera_tipoLibro, string bandera_gradoLibro, Boolean exists_file)
         {
-            objFunciones.agregarEjercicios(libro, bandera_tipoLibro, exists_file);
+            objFunciones.agregarEjercicios(libro, bandera_tipoLibro, bandera_gradoLibro, exists_file);
         }
 
         public void numeroDePaginas(DirectoryInfo libro)
