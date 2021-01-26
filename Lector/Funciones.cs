@@ -430,7 +430,7 @@ namespace Lector
                                                         topR += 50;
                                                         leftR = 50;
                                                     }
-                                                    nombreEjercicioRel = "p" + idhoja + "_rel_" + valor + "_" + num;
+                                                    nombreEjercicioRel = "p" + idhoja + "_rel" + numEjercicio + "_" + valor + "_" + num;
                                                     html += "\n\r\t\t\t\t" + @"<div id =""" + nombreEjercicioRel + @""" class=""relacionar""></div>";
                                                     if (exists_file != true)
                                                     {
