@@ -356,6 +356,7 @@ namespace Lector
                             int top = 20, left = 50;
                             string wid = "", hei = "";
                             string html = "<!-- inicio ejercicios -->";
+                            html += "\n\r" + @"<div id =""ejercicios_p" + idhoja + @""">";
                             ejer = actual[1].Split(",");
                             // Obtener ejercicios
                             for (int x = 0; x < ejer.Length; x++)
@@ -530,16 +531,16 @@ namespace Lector
                                     }
                                     catch (Exception e)
                                     {
-                                        Console.WriteLine("incorrectas: " + line3);
+                                        Console.WriteLine("Error en la línea: " + line3);
                                         bandera_final = 0;
                                     }                                    
                                 }else
                                 {
-                                    Console.WriteLine("incorrectas: " + line3);
+                                    Console.WriteLine("Incorrectas: " + line3);
                                     bandera_final = 0;
                                 }
                             }
-                            html += "\n\r" + "<!-- fin ejercicios -->" + "\n\r";
+                            html += "\n\r" + "</div>" + "\n\r" + "<!-- fin ejercicios -->" + "\n\r";
                             // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
                             // Guardar ejercicios en la hoja
                             String ruta = path + libro.Name + @"\" + fi.Name;
