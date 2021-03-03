@@ -516,6 +516,11 @@ namespace Lector
                                                     }
                                                 }
                                             }
+                                            else
+                                            {
+                                                Console.WriteLine("Nomenclatura de ejercicio incorrecta en la línea: " + line3);
+                                                bandera_final = 0;
+                                            }
 
                                             // Crear estilo del ejercicio
                                             if (!System.Text.RegularExpressions.Regex.IsMatch(ejercicio, "relacionar")
