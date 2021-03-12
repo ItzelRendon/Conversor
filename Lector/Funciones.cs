@@ -19,6 +19,7 @@ namespace Lector
 
         public int bandera_final = 0;
         int[] borrar;
+        Boolean banderaSopas = false;
 
         string line,
                sPatternW = "^.w0{width:",
@@ -106,6 +107,7 @@ namespace Lector
                 width = 0;
                 height = 0;
                 numPaginas = 0;
+                banderaSopas = false;
 
                 while (line != null)
                 {
@@ -466,7 +468,8 @@ namespace Lector
                                                 html += "\n\r\t\t";
                                                 html += @"<div id=""" + idBoton + @""" class=""boton-puzzle"" onclick=""showPuzzle()"">Jugar <div class=""fa fa-play icon-puzzle"" aria-hidden=""true""></div></div>";
                                                 html += "\n\r\t\t";
-                                                html += @"<div id=""" + idWords + @"""></div>";                                                
+                                                html += @"<div id=""" + idWords + @"""></div>";
+                                                banderaSopas = true;
                                             }
                                             else if (ejercicio.Equals("foto"))
                                             {
@@ -594,6 +597,14 @@ namespace Lector
                 // Tipo de libro
                 String encontrar3 = "let tipo_libro = '';";
                 readText = readText.Replace(encontrar3, "let tipo_libro = '" + tipo_libro + "';");
+                if (banderaSopas)
+                {
+                    // Archivo sopas.js
+                    String encontrar4 = @"<script type=""text/javascript"" src=""assets/modulos/sopaLetras.js""></script>";
+                    String reemplazo4 = encontrar4 + "\n\r" + @"<script type=""text/javascript"" src=""assets/modulos/sopas.js""></script>";
+                    readText = readText.Replace(encontrar4, reemplazo4);
+                }
+                // *-*-*-*--*-*-*-*-*-*-*-*
                 escri = File.CreateText(ruta);
                 escri.WriteLine(readText);
                 escri.Close();
