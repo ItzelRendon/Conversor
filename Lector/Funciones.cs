@@ -414,30 +414,33 @@ namespace Lector
                                             {
                                                 // RELACIONAR
                                                 string[] relacionar = ejercicio.Split("#");
+                                                string[] relacionarLados = relacionar[1].Split("-");
                                                 nombreEjercicio = "p" + idhoja + "_relacionar" + numEjercicio;
                                                 string nombreEjercicioRel = "";
                                                 html += @"<div id=""" + nombreEjercicio + @""" name=""relacionar"">";
-                                                int num = 0, leftR = 0, topR = 50;
-                                                for (int l = 1; l <= Convert.ToInt32(relacionar[1]); l++)
+                                                string valor = "", total = "";
+                                                for (int a = 0; a < 2; a++)
                                                 {
-                                                    string valor = "";
-                                                    if ((l % 2) == 0)
+                                                    int num = 0;
+                                                    if (a == 0)
                                                     {
-                                                        valor = "d";
-                                                        leftR = 185;
+                                                        valor = "i";
+                                                        total = relacionarLados[1];
                                                     }
                                                     else
                                                     {
-                                                        valor = "i";
-                                                        num++;
-                                                        topR += 50;
-                                                        leftR = 50;
+                                                        valor = "d";
+                                                        total = relacionarLados[0];
                                                     }
-                                                    nombreEjercicioRel = "p" + idhoja + "_rel" + numEjercicio + "_" + valor + "_" + num;
-                                                    html += "\n\r\t\t\t\t" + @"<div id =""" + nombreEjercicioRel + @""" class=""relacionar""></div>";
-                                                    if (exists_file != true)
+                                                    for (int l = 1; l <= Convert.ToInt32(total); l++)
                                                     {
-                                                        guardarCSS(path, libro, nombreEjercicioRel, ejercicio, leftR, topR, "50px", "50px");
+                                                        num++;
+                                                        nombreEjercicioRel = "p" + idhoja + "_rel" + numEjercicio + "_" + valor + "_" + num;
+                                                        html += "\n\r\t\t\t\t" + @"<div id =""" + nombreEjercicioRel + @""" class=""relacionar""></div>";
+                                                        if (exists_file != true)
+                                                        {
+                                                            guardarCSS(path, libro, nombreEjercicioRel, ejercicio, 50, 50, "50px", "50px");
+                                                        }
                                                     }
                                                 }
                                                 html += "\n\r\t\t" + @"</div>";
