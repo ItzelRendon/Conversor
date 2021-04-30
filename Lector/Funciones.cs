@@ -425,12 +425,12 @@ namespace Lector
                                                     if (a == 0)
                                                     {
                                                         valor = "i";
-                                                        total = relacionarLados[1];
+                                                        total = relacionarLados[0];
                                                     }
                                                     else
                                                     {
                                                         valor = "d";
-                                                        total = relacionarLados[0];
+                                                        total = relacionarLados[1];
                                                     }
                                                     for (int l = 1; l <= Convert.ToInt32(total); l++)
                                                     {
