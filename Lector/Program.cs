@@ -8,6 +8,9 @@ namespace Lector
         public static void Main(string[] args)
         {
 
+            // Founders: Jesus & Adriana
+            // Omega Project
+
             String path = @"C:\Libros\",
                    libro = "",
                    bandera_tipoLibro = "",
