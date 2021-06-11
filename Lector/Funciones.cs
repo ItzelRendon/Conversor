@@ -10,14 +10,15 @@ namespace Lector
     class Funciones
     {
         int counter = 1,
-            bandera = 0,        
+            bandera = 0,
             numPaginas = 0,
             inicio = 0,
             final = 0,
             width = 0,
             height = 0;
 
-        public int bandera_final = 0;
+        public int bandera_final = 0; 
+        public string htdocs = @"C:\xampp\htdocs\proyectos";
         int[] borrar;
         Boolean banderaSopas = false;
 
@@ -46,7 +47,7 @@ namespace Lector
             //Directory.CreateDirectory(carpeta);
 
             // Agregar carpeta assets
-            String rutaOrigen = @"C:\xampp\htdocs\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\assets\";
+            String rutaOrigen = htdocs + @"\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\assets\";
             DirectoryInfo assets = new DirectoryInfo(rutaOrigen);
             DirectoryInfo[] carpetas = assets.GetDirectories();
             foreach (DirectoryInfo asset in carpetas)
@@ -81,9 +82,9 @@ namespace Lector
             }
 
             //Copiar el sopa de letras correspondiente  
-            if (File.Exists(@"C:\xampp\htdocs\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\Archivos\" + bandera_tipoLibro + @"\" + bandera_gradoLibro + @"\" + libro.Name + "_SOPA.js") != false)
+            if (File.Exists(htdocs + @"\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\Archivos\" + bandera_tipoLibro + @"\" + bandera_gradoLibro + @"\" + libro.Name + "_SOPA.js") != false)
             {
-                System.IO.File.Copy(System.IO.Path.Combine(@"C:\xampp\htdocs\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\Archivos\" + bandera_tipoLibro + @"\" + bandera_gradoLibro, libro.Name + "_SOPA" + ".js"),
+                System.IO.File.Copy(System.IO.Path.Combine(htdocs + @"\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\Archivos\" + bandera_tipoLibro + @"\" + bandera_gradoLibro, libro.Name + "_SOPA" + ".js"),
                                System.IO.Path.Combine(path + libro.Name + @"\assets\modulos\", "sopas.js"), true);
             }
         }
@@ -225,7 +226,7 @@ namespace Lector
         public void obtenerListaEjercicios(DirectoryInfo libro, string bandera_tipoLibro, string bandera_gradoLibro)
         {
             // Obtener lista de ejercicios            
-            rutaEjercicios = @"C:\xampp\htdocs\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\Archivos\" + bandera_tipoLibro + @"\" + bandera_gradoLibro + @"\" + libro.Name + ".txt";
+            rutaEjercicios = htdocs + @"\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\Archivos\" + bandera_tipoLibro + @"\" + bandera_gradoLibro + @"\" + libro.Name + ".txt";
 
             System.IO.StreamReader file2 = new System.IO.StreamReader(rutaEjercicios, System.Text.Encoding.Default);
             String line2 = "";

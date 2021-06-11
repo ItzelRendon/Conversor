@@ -8,7 +8,8 @@ namespace Lector
         String cadena;
         public string archivos(string tipo)
         {
-            cadena = File.ReadAllText(@"C:\xampp\htdocs\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\Archivos\" + tipo + ".html");
+            Funciones objFunciones = new Funciones();
+            cadena = File.ReadAllText(objFunciones.htdocs + @"\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\Archivos\" + tipo + ".html");
 
             return cadena;
         }
