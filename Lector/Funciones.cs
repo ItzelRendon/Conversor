@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -19,6 +18,7 @@ namespace Lector
 
         public int bandera_final = 0; 
         public string htdocs = @"C:\xampp\htdocs\proyectos";
+        public string path = @"C:\Libros";
         int[] borrar;
         Boolean banderaSopas = false;
 
@@ -26,7 +26,6 @@ namespace Lector
                sPatternW = "^.w0{width:",
                sPatternH = "^.h0{height:",
                tipo_libro = "",
-               path = @"C:\Libros\",
                pathFinal = "",
                rutaEjercicios,
                puzzle,
@@ -43,7 +42,7 @@ namespace Lector
 
         public void agregarAssets(DirectoryInfo libro, string bandera_tipoLibro, string bandera_gradoLibro)
         {
-            string carpeta = EliminarAssets(@"C:\Libros\", libro);
+            string carpeta = EliminarAssets(path, libro);
             //Directory.CreateDirectory(carpeta);
 
             // Agregar carpeta assets
@@ -85,7 +84,7 @@ namespace Lector
             if (File.Exists(htdocs + @"\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\Archivos\" + bandera_tipoLibro + @"\" + bandera_gradoLibro + @"\" + libro.Name + "_SOPA.js") != false)
             {
                 System.IO.File.Copy(System.IO.Path.Combine(htdocs + @"\movil.sevalladolid.mx\mlsev\LIBRO_PRUEBA\Matematicas1231-K\Archivos\" + bandera_tipoLibro + @"\" + bandera_gradoLibro, libro.Name + "_SOPA" + ".js"),
-                               System.IO.Path.Combine(path + libro.Name + @"\assets\modulos\", "sopas.js"), true);
+                               System.IO.Path.Combine(path + @"\" + libro.Name + @"\assets\modulos\", "sopas.js"), true);
             }
         }
         
@@ -94,9 +93,9 @@ namespace Lector
             // Agregar información nueva al INDEX del libro
             foreach (var fi in libro.GetFiles("*.html"))
             {
-                pathFinal = path + libro.Name + @"\" + fi.Name;
+                pathFinal = path + @"\" + libro.Name + @"\" + fi.Name;
                 System.IO.StreamReader file = new System.IO.StreamReader(pathFinal, System.Text.Encoding.Default);
-                escri = File.CreateText(@"C:\Libros\temp.html");
+                escri = File.CreateText(path + @"\temp.html");
 
                 //Inicializar variables
                 counter = 1;
@@ -219,7 +218,7 @@ namespace Lector
                 file.Close();
                 escri.Close();
                 File.Delete(pathFinal);
-                File.Move(@"C:\Libros\temp.html", pathFinal);
+                File.Move(path + @"\temp.html", pathFinal);
             }
         }
 
@@ -287,7 +286,7 @@ namespace Lector
 
                         if (!banderaCanvas && idhoja > inicio)
                         {
-                            String ruta = path + libro.Name + @"\" + fi.Name;
+                            String ruta = path + @"\" + libro.Name + @"\" + fi.Name;
                             String readText = File.ReadAllText(ruta);
                             String encontrar = objArchivos.canvas();
                             String canvas = @"<canvas id=""canvas" + idhoja + @""" class=""canvas"" width=""" + width + @""" height=""" + height + @"""></canvas>";
@@ -440,7 +439,7 @@ namespace Lector
                                                         html += "\n\r\t\t\t\t" + @"<div id =""" + nombreEjercicioRel + @""" class=""relacionar""></div>";
                                                         if (exists_file != true)
                                                         {
-                                                            guardarCSS(path, libro, nombreEjercicioRel, ejercicio, 50, 50, "50px", "50px");
+                                                            guardarCSS(path + @"\", libro, nombreEjercicioRel, ejercicio, 50, 50, "50px", "50px");
                                                         }
                                                     }
                                                 }
@@ -519,7 +518,7 @@ namespace Lector
                                                     hei = "20px";
                                                     if (exists_file != true)
                                                     {
-                                                        guardarCSS(path, libro, nombreEjercicio, ejercicio, left, top, wid, hei);
+                                                        guardarCSS(path + @"\", libro, nombreEjercicio, ejercicio, left, top, wid, hei);
                                                     }
                                                 }
                                             }
@@ -535,7 +534,7 @@ namespace Lector
                                                 && exists_file != true
                                                 && !System.Text.RegularExpressions.Regex.IsMatch(ejercicio, "multiple"))
                                             {
-                                                guardarCSS(path, libro, nombreEjercicio, ejercicio, left, top, wid, hei);
+                                                guardarCSS(path + @"\", libro, nombreEjercicio, ejercicio, left, top, wid, hei);
                                             }
 
                                             numEjercicio++;
@@ -555,7 +554,7 @@ namespace Lector
                             html += "\n\r" + "</div>" + "\n\r" + "<!-- fin ejercicios -->" + "\n\r";
                             // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
                             // Guardar ejercicios en la hoja
-                            String ruta = path + libro.Name + @"\" + fi.Name;
+                            String ruta = path + @"\" + libro.Name + @"\" + fi.Name;
                             String readText = File.ReadAllText(ruta);
                             String encontrar = objArchivos.canvas();
                             int cc = readText.IndexOf("<!-- inicio ejercicios -->");
@@ -590,7 +589,7 @@ namespace Lector
             numPaginas = filePaths.Length;
             foreach (var fi in libro.GetFiles("*.html"))
             {
-                String ruta = path + libro.Name + @"\" + fi.Name;
+                String ruta = path + @"\" + libro.Name + @"\" + fi.Name;
                 String readText = File.ReadAllText(ruta);
                 // Diferencia páginas inicio
                 String encontrar = "var diferencia_pagina_inicio = 2";
@@ -618,7 +617,7 @@ namespace Lector
         public void guardarCSS(string path, DirectoryInfo libro, string nombreEjercicio, string ejercicio, int left, int top, string width, string height)
         {
             // Se agrega el ejercicio al CSS
-            string estilo = path + libro.Name + @"\" + "assets" + @"\" + "css" + @"\" + "ejercicios.css";            
+            string estilo = path + @"\" + libro.Name + @"\" + "assets" + @"\" + "css" + @"\" + "ejercicios.css";            
             if (nombreEjercicio.Length != 0)
             {
                 StreamWriter escri2 = File.AppendText(estilo);
@@ -701,7 +700,7 @@ namespace Lector
         public void Copiar(String Direccion, String libro)
         {
             Eliminar(Direccion, libro);
-            DirectoryInfo di_origen = new DirectoryInfo(@"C:\Libros\" + libro);
+            DirectoryInfo di_origen = new DirectoryInfo(path + @"\" + libro);
             DirectoryInfo di_destino = new DirectoryInfo(Direccion + libro);
             CopyFilesRecursively(di_origen, di_destino);
             Console.WriteLine("LIBRO " + libro);

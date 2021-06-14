@@ -63,8 +63,10 @@ namespace Lector
 
         public void Copiar(String Direccion, String libro)
         {
+            Funciones objFunciones = new Funciones();
+
             EliminarAssets(Direccion, libro);
-            DirectoryInfo di_origen = new DirectoryInfo(@"C:\Libros\" + libro);
+            DirectoryInfo di_origen = new DirectoryInfo(objFunciones.path + @"\" + libro);
             DirectoryInfo di_destino = new DirectoryInfo(Direccion + libro);
             CopyFilesRecursively(di_origen, di_destino);
             Console.WriteLine("LIBRO " + libro);

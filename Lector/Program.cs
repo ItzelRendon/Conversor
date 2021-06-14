@@ -11,8 +11,7 @@ namespace Lector
             // Founders: Jesus & Adriana
             // Omega Project
 
-            String path = @"C:\Libros\",
-                   libro = "",
+            String libro = "",
                    bandera_tipoLibro = "",
                    bandera_gradoLibro = "";
 
@@ -27,7 +26,9 @@ namespace Lector
             Libro objLibro = new Libro();
             Funciones objFunciones = new Funciones();
 
-            DirectoryInfo dirPrincipal = new DirectoryInfo(@"C:\Libros");
+            String path = objFunciones.path;
+
+            DirectoryInfo dirPrincipal = new DirectoryInfo(path);
             DirectoryInfo[] dirLibros = dirPrincipal.GetDirectories();
 
 
@@ -41,7 +42,7 @@ namespace Lector
                 //******************************************************************
 
                 //Comprobar si existe EstiloLibro
-                string exists = path + book.Name + @"\" + "assets" + @"\" + "css" + @"\" + "ejercicios.css";
+                string exists = path + @"\" + book.Name + @"\" + "assets" + @"\" + "css" + @"\" + "ejercicios.css";
                 if (File.Exists(exists)) exists_file = true;
                                     
                 // Comparar si es una GUIA
